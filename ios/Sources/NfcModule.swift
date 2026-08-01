@@ -9,9 +9,9 @@ public final class NfcModule: NSObject, NativeModule, NFCNDEFReaderSessionDelega
     private var events: [[String: Any]] = []
     public func invoke(method: String, payload: Data, completion: @escaping ModuleCompletion) { queue.async { do { let v = try WireMap.decode(payload); switch method {
     case "availability": try self.success(["availability": .integer(NFCNDEFReaderSession.readingAvailable ? 1 : 2)], completion)
-    case "beginRead": self.pending = nil; try self.begin(try v.text("prompt")); try self.success(completion: completion)
-    case "write": self.pending = try self.message(try v.text("recordsJson")); try self.begin(try v.text("prompt")); try self.success(completion: completion)
-    case "cancel": self.session?.invalidate(); self.session = nil; self.pending = nil; self.event(3); try self.success(completion: completion)
+    case "beginRead": self.pending = nil; try self.begin(try v.text("prompt")); try self.success([:], completion)
+    case "write": self.pending = try self.message(try v.text("recordsJson")); try self.begin(try v.text("prompt")); try self.success([:], completion)
+    case "cancel": self.session?.invalidate(); self.session = nil; self.pending = nil; self.event(3); try self.success([:], completion)
     case "poll": let n = min(128, max(1, Int(try v.integer("limit")))); let rows = Array(self.events.prefix(n)); self.events.removeFirst(min(n, self.events.count)); let data = try JSONSerialization.data(withJSONObject: rows); try self.success(["json": .text(String(data: data, encoding: .utf8) ?? "[]")], completion)
     default: throw NfcError.invalid }
     } catch { self.failure(error.localizedDescription, completion) } } }
