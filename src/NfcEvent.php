@@ -1,0 +1,2 @@
+<?php
+declare(strict_types=1);namespace Pam\Native\Nfc;final readonly class NfcEvent{public function __construct(public NfcEventKind$kind,public array$records=[],public string$message=''){}public static function fromJson(array$v):self{$rows=json_decode((string)($v['recordsJson']??'[]'),true);return new self(NfcEventKind::from((int)$v['kind']),array_map(fn(array$r)=>NdefRecord::fromJson($r),is_array($rows)?$rows:[]),(string)($v['message']??''));}}
