@@ -2,6 +2,11 @@
 
 Read and write NDEF tags from PAM Native with one lifecycle-safe API on Android and iOS.
 
+```bash
+composer require pushinbr/pam-native-nfc
+pam mobile prepare
+```
+
 ```php
 $nfc->beginRead(fn (bool $ok, ?string $error) => null);
 $nfc->write(NdefRecord::uri('https://pam.dev'), fn (bool $ok, ?string $error) => null);
