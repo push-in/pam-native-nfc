@@ -1,5 +1,21 @@
 # PAM Native NFC
 
+## Start here
+
+This is a Composer extension for PAM Native. Install the PAM Runtime, create a native project, and then add this package through PAM’s verified Composer toolchain:
+
+```bash
+curl --proto '=https' --proto-redir '=https' --tlsv1.2 \
+    --connect-timeout 15 --max-time 60 --max-filesize 1048576 -fsSL \
+    https://github.com/push-in/pam/releases/latest/download/install.sh | sh
+
+pam init my-app --template native
+cd my-app
+pam composer require pushinbr/pam-native-nfc
+pam doctor --fix
+```
+
+
 Read and write NDEF tags from PAM Native with one lifecycle-safe API on Android and iOS.
 
 ```bash
