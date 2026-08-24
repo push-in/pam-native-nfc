@@ -1,20 +1,54 @@
+<!-- pam:product-page:start -->
+<div align="center">
+
 # PAM Native NFC
 
-## Start here
+**Read and write NDEF tags through one lifecycle-safe API.**
 
-This is a Composer extension for PAM Native. Install the PAM Runtime, create a native project, and then add this package through PAM’s verified Composer toolchain:
+Run bounded NFC sessions, parse typed records, and handle platform capability differences without leaking native session objects.
+
+[![Latest version](https://img.shields.io/packagist/v/pushinbr/pam-native-nfc?style=flat-square&label=stable)](https://packagist.org/packages/pushinbr/pam-native-nfc)
+[![CI](https://img.shields.io/github/actions/workflow/status/push-in/pam-native-nfc/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/push-in/pam-native-nfc/actions)
+![PHP](https://img.shields.io/badge/PHP-8.5-777BB4?style=flat-square&logo=php&logoColor=white)
+![Android](https://img.shields.io/badge/Android-API%2026%2B-3DDC84?style=flat-square&logo=android&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-15%2B-000000?style=flat-square&logo=apple&logoColor=white)
+
+**[Documentation](https://push-in.github.io/pam-docs/native/overview/) · [Quick start](#quick-start) · [What you can build](#what-you-can-build) · [PAM ecosystem](https://push-in.github.io/pam-docs/ecosystem/) · [Issues](https://github.com/push-in/pam-native-nfc/issues)**
+
+</div>
+
+---
+
+## Why PAM Native NFC
+
+Run bounded NFC sessions, parse typed records, and handle platform capability differences without leaking native session objects. The public API is strictly typed for PHP 8.5; expensive or frame-sensitive work stays in Rust or the platform SDK instead of crossing the application boundary every frame.
+
+| | |
+| --- | --- |
+| **Best for** | A focused capability you can add to any PAM Native application |
+| **Native path** | Android NFC · Core NFC |
+| **Application model** | Composer package + generated native integration |
+| **Design rule** | Independent module; no feed, vertical, or application template bundled |
+
+## What you can build
+
+- Asset and inventory tagging
+- Contactless onboarding and pairing
+- Smart posters, tickets, and physical experiences
+
+## Quick start
+
+Already have a PAM Native project? Add only this capability:
 
 ```bash
-curl --proto '=https' --proto-redir '=https' --tlsv1.2 \
-    --connect-timeout 15 --max-time 60 --max-filesize 1048576 -fsSL \
-    https://github.com/push-in/pam/releases/latest/download/install.sh | sh
-
-pam init my-app --template native
-cd my-app
 pam composer require pushinbr/pam-native-nfc
 pam doctor --fix
 ```
 
+New to PAM? Follow the **[five-minute PAM Native setup](https://push-in.github.io/pam-docs/native/overview/)** once, then return here. Your application stays a normal Composer project with a committed lockfile.
+<!-- pam:product-page:end -->
+
+## See it in action
 
 Read and write NDEF tags from PAM Native with one lifecycle-safe API on Android and iOS.
 
@@ -30,7 +64,6 @@ $nfc->poll(fn (array $events) => handleNfcEvents($events));
 ```
 
 Only one NFC session may be active at a time. iOS presents the system NFC sheet and requires the NFC capability in the signing profile. Android uses reader mode and requires a foreground Activity. The queue is bounded to 128 events. NDEF payloads are limited to 1 MiB in PHP before reaching native code; the physical tag's capacity is checked at write time.
-
 
 ## What installation does
 
@@ -66,7 +99,7 @@ All coded states, kinds, and variants are sequential integer-backed enums. Use e
 
 ## Compatibility and support
 
-This package targets PAM Native `0.6.x`, Android API 26+, and iOS 15+ unless a platform-specific section above states a stricter requirement. Platform SDKs, credentials, entitlements, physical hardware, and store configuration remain application responsibilities.
+This package targets PAM Native `0.8.x`, Android API 26+, and iOS 15+ unless a platform-specific section above states a stricter requirement. Platform SDKs, credentials, entitlements, physical hardware, and store configuration remain application responsibilities.
 
 - [PAM documentation](https://push-in.github.io/pam-docs/introduction/)
 - [PAM Native overview](https://push-in.github.io/pam-docs/native/overview/)
